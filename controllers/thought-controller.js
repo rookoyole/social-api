@@ -1,21 +1,21 @@
-const { Comment, Pizza } = require('../models');
+const { Thought, User } = require('../models');
 
-const commentController = {
+const thoughtController = {
   // add comment to pizza
-  addComment({ params, body }, res) {
+  addThought({ params, body }, res) {
     console.log(params);
-    Comment.create(body)
+    Thought.create(body)
       .then(({ _id }) => {
-        return Pizza.findOneAndUpdate(
-          { _id: params.pizzaId },
-          { $push: { comments: _id } },
+        return User.findOneAndUpdate(
+          { _id: params.userId },
+          { $push: { thoughts: _id } },
           { new: true }
         );
       })
       .then(dbPizzaData => {
         console.log(dbPizzaData);
         if (!dbPizzaData) {
-          res.status(404).json({ message: 'No pizza found with this id!' });
+          res.status(404).json({ message: 'No user found with this id!' });
           return;
         }
         res.json(dbPizzaData);
@@ -24,15 +24,15 @@ const commentController = {
   },
 
   // add reply to comment
-  addReply({ params, body }, res) {
-    Comment.findOneAndUpdate(
+  addReaction({ params, body }, res) {
+    Thought.findOneAndUpdate(
       { _id: params.commentId },
-      { $push: { replies: body } },
+      { $push: { reactions: body } },
       { new: true, runValidators: true }
     )
       .then(dbPizzaData => {
         if (!dbPizzaData) {
-          res.status(404).json({ message: 'No pizza found with this id!' });
+          res.status(404).json({ message: 'No user found with this id!' });
           return;
         }
         res.json(dbPizzaData);
@@ -41,13 +41,13 @@ const commentController = {
   },
 
   // remove comment
-  removeComment({ params }, res) {
-    Comment.findOneAndDelete({ _id: params.commentId })
+  removeThought({ params }, res) {
+    Thought.findOneAndDelete({ _id: params.thoughtId })
       .then(deletedComment => {
         if (!deletedComment) {
           return res.status(404).json({ message: 'No comment with this id!' });
         }
-        return Pizza.findOneAndUpdate(
+        return Thought.findOneAndUpdate(
           { _id: params.pizzaId },
           { $pull: { comments: params.commentId } },
           { new: true }
@@ -63,7 +63,7 @@ const commentController = {
       .catch(err => res.json(err));
   },
   // remove reply
-  removeReply({ params }, res) {
+  removeReaction({ params }, res) {
     Comment.findOneAndUpdate(
       { _id: params.commentId },
       { $pull: { replies: { replyId: params.replyId } } },
@@ -74,4 +74,4 @@ const commentController = {
   }
 };
 
-module.exports = commentController;
+module.exports = thoughtController;
