@@ -83,7 +83,7 @@ Features:
 
 Repository Link: [https://github.com/rookoyole/social-api](https://github.com/rookoyole/social-api)
 
-Walkthrough Video: [https://cryptic-river-67719.herokuapp.com/](https://cryptic-river-67719.herokuapp.com/)
+Walkthrough Video: [https://drive.google.com/file/d/1v5RggR_w5z3xWRdPfKpx6ERJlCLwpAwu/view](https://drive.google.com/file/d/1v5RggR_w5z3xWRdPfKpx6ERJlCLwpAwu/view)
 
 <!-- CONTACT -->
 ## Contact
