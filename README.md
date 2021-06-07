@@ -68,7 +68,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](assets/images/screenshot.png)
+[![Product Name Screen Shot][product-screenshot]](public/assets/images/screenshot.png)
 <br />
 The purpose of this project was to create a NoSQL API backend for a social network, including a NoSQL database, users can share their thoughts, react to friends’ thoughts, and create a friends list.
 
@@ -83,7 +83,7 @@ Features:
 
 Repository Link: [https://github.com/rookoyole/social-api](https://github.com/rookoyole/social-api)
 
-Deployed Application: [https://cryptic-river-67719.herokuapp.com/](https://cryptic-river-67719.herokuapp.com/)
+Walkthrough Video: [https://cryptic-river-67719.herokuapp.com/](https://cryptic-river-67719.herokuapp.com/)
 
 <!-- CONTACT -->
 ## Contact
