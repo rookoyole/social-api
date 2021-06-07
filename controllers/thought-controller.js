@@ -1,24 +1,55 @@
 const { Thought, User } = require('../models');
 
 const thoughtController = {
+  getAllThoughts(req, res) {
+    Thought.find({})
+      .populate({
+        path: 'thoughts',
+        select: '-__v'
+      })
+      .select('-__v')
+      .sort({ _id: -1 })
+      .then(dbUserData => res.json(dbUserData))
+      .catch(err => {
+        console.log(err);
+        res.sendStatus(400);
+      });
+  },
+
+  // get one thought by id
+  getThoughtById({ params }, res) {
+    Thought.findOne({ _id: params.userId })
+      .populate({
+        path: 'thoughts',
+        select: '-__v'
+      })
+      .select('-__v')
+      .then(dbUserData => res.json(dbUserData))
+      .catch(err => {
+        
+        console.log(err);
+        res.sendStatus(400);
+      });
+  },
+
   // add comment to pizza
   addThought({ params, body }, res) {
     console.log(params);
     Thought.create(body)
       .then(({ _id }) => {
-        return User.findOneAndUpdate(
+        return Thought.findOneAndUpdate(
           { _id: params.userId },
           { $push: { thoughts: _id } },
           { new: true }
         );
       })
-      .then(dbPizzaData => {
-        console.log(dbPizzaData);
-        if (!dbPizzaData) {
+      .then(dbUserData => {
+        console.log(dbUserData);
+        if (!dbUserData) {
           res.status(404).json({ message: 'No user found with this id!' });
           return;
         }
-        res.json(dbPizzaData);
+        res.json(dbUserData);
       })
       .catch(err => res.json(err));
   },
@@ -30,12 +61,12 @@ const thoughtController = {
       { $push: { reactions: body } },
       { new: true, runValidators: true }
     )
-      .then(dbPizzaData => {
-        if (!dbPizzaData) {
+      .then(dbUserData => {
+        if (!dbUserData) {
           res.status(404).json({ message: 'No user found with this id!' });
           return;
         }
-        res.json(dbPizzaData);
+        res.json(dbUserData);
       })
       .catch(err => res.json(err));
   },
@@ -53,12 +84,12 @@ const thoughtController = {
           { new: true }
         );
       })
-      .then(dbPizzaData => {
-        if (!dbPizzaData) {
+      .then(dbUserData => {
+        if (!dbUserData) {
           res.status(404).json({ message: 'No pizza found with this id!' });
           return;
         }
-        res.json(dbPizzaData);
+        res.json(dbUserData);
       })
       .catch(err => res.json(err));
   },
@@ -69,7 +100,7 @@ const thoughtController = {
       { $pull: { replies: { replyId: params.replyId } } },
       { new: true }
     )
-      .then(dbPizzaData => res.json(dbPizzaData))
+      .then(dbUserData => res.json(dbUserData))
       .catch(err => res.json(err));
   }
 };

@@ -10,7 +10,7 @@ const userController = {
       })
       .select('-__v')
       .sort({ _id: -1 })
-      .then(dbPizzaData => res.json(dbPizzaData))
+      .then(dbUserData => res.json(dbUserData))
       .catch(err => {
         console.log(err);
         res.sendStatus(400);
@@ -26,7 +26,7 @@ const userController = {
         select: '-__v'
       })
       .select('-__v')
-      .then(dbPizzaData => res.json(dbPizzaData))
+      .then(dbUserData => res.json(dbUserData))
       .catch(err => {
         
         console.log(err);
@@ -37,19 +37,19 @@ const userController = {
   // create user
   createUser({ body }, res) {
     User.create(body)
-      .then(dbPizzaData => res.json(dbPizzaData))
+      .then(dbUserData => res.json(dbUserData))
       .catch(err => res.json(err));
   },
 
   // update user by id
   updateUser({ params, body }, res) {
     User.findOneAndUpdate({ _id: params.userId }, body, { new: true, runValidators: true })
-      .then(dbPizzaData => {
-        if (!dbPizzaData) {
+      .then(dbUserData => {
+        if (!dbUserData) {
           res.status(404).json({ message: 'No user found with this id!' });
           return;
         }
-        res.json(dbPizzaData);
+        res.json(dbUserData);
       })
       .catch(err => res.json(err));
   },
@@ -57,7 +57,7 @@ const userController = {
   // delete user
   deleteUser({ params }, res) {
     User.findOneAndDelete({ _id: params.userId })
-      .then(dbPizzaData => res.json(dbPizzaData))
+      .then(dbUserData => res.json(dbUserData))
       .catch(err => res.json(err));
   }
 };

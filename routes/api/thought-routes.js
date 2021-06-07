@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const {
-  //getAllThoughts,
- // getThoughtById,
+  getAllThoughts,
+  getThoughtById,
   addThought,
   //updateThought,
   removeThought,
@@ -10,13 +10,13 @@ const {
 } = require('../../controllers/thought-controller');
 
 router
-  .route('/');
- // .get(getAllThoughts);
-
+  .route('/')
+  .get(getAllThoughts);
+  
 // /api/comments/<pizzaId>
 router
-  .route('/:userId');
-//  .get(getThoughtById);
+  .route('/:userId')
+  .get(getThoughtById);
 
 // /api/comments/<pizzaId>/<commentId>
 router
